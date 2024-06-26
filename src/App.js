@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Chart from './components/Chart';
+import TimeframeSelector from './components/TimeframeSelector';
+import ThemeToggle from './components/ThemeToggle';
+import './styles/App.css';
 
-function App() {
+const App = () => {
+  const [timeframe, setTimeframe] = useState('daily');
+  const [theme, setTheme] = useState('light-mode');
+
+  const handleTimeframeChange = (newTimeframe) => {
+    setTimeframe(newTimeframe);
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light-mode' ? 'dark-mode' : 'light-mode');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`app-container ${theme}`}>
+      <h1 className="app-title">Interactive Charting Application</h1>
+      <ThemeToggle toggleTheme={toggleTheme} />
+      <TimeframeSelector onSelect={handleTimeframeChange} />
+      <Chart timeframe={timeframe} />
     </div>
   );
-}
+};
 
 export default App;
